@@ -9,7 +9,6 @@ public class Test {
 	public static void main(String[] args) {
 		
 		Test test = new Test();
-		
 		in = new Scanner(System.in);
 		Blackjack blackjack;
 		Poker poker;
@@ -42,21 +41,21 @@ public class Test {
 				in.nextLine();
 		
 				switch(choice) {
-					case 1:
-						blackjack = new Blackjack(test);
-						blackjack.driver();
-						break;
-					case 2:
-						poker = new Poker(test);
-						poker.driver();
-						break;
-					case 3:
-						break;
-					case 4: 
-						going = false;
-						break;
-					default:
-						System.out.println("Invalid input.");
+				case 1:
+					blackjack = new Blackjack(test);
+					blackjack.driver();
+					break;
+				case 2:
+					poker = new Poker(test);
+					poker.driver();
+					break;
+				case 3:
+					break;
+				case 4: 
+					going = false;
+					break;
+				default:
+					System.out.println("Invalid input.");
 				}
 			}
 			catch (NumberFormatException e) {
@@ -64,9 +63,11 @@ public class Test {
 			}
 		} while (going && test.chips > 0);
 		
-		if (test.chips < 0) System.out.println("You ran out of chips. Goodbye.");
-		
-		else System.out.println("You ended up with $" + test.chips + " total. Goodbye.");
+		if (test.chips < 0) {
+			System.out.println("You ran out of chips. Goodbye.");
+		} else {
+			System.out.println("You ended up with $" + test.chips + " total. Goodbye.");
+		}
 		
 		in.close();
 	}
