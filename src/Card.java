@@ -27,7 +27,7 @@ public class Card implements Comparable<Card> {
 	// the type of card (king, queen, number card, jack)
 	
 	private int pointValue;
-	// what is the numeric value of the card
+	// what is the numeric value of the card (depends on the game)
 	
 	// card constructors
 	public Card(suit suits, rank ranks) {

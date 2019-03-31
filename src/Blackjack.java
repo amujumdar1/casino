@@ -7,7 +7,6 @@ public class Blackjack {
 	
 	private Deck hand;
 	private Deck deck;
-	private Deck splitHand;
 	private Deck dealer;
 	private Test test;
 	private int bet;
@@ -25,10 +24,16 @@ public class Blackjack {
 		System.out.println("Hello, " + test.getName() + ". Welcome to Blackjack.");
 		
 		game();
+		if (test.getChips() < 1) {
+			return;
+		}
 		boolean invalid = true;
 		int choice = 0;
 		do {
 			try {
+				if (test.getChips() < 1) {
+					return;
+				}
 				System.out.println("Press 1 to play again.\n"
 						 + "Press 2 to exit Blackjack.");
 				choice = in.nextInt();
@@ -45,8 +50,7 @@ public class Blackjack {
 				default:
 					System.out.println("Invalid input. Please try again.");
 				}
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Invalid input. Please try again.");
 			}
 		} while (invalid);
@@ -68,7 +72,7 @@ public class Blackjack {
 				} else if (bet < 1) {
 					System.out.println("Invalid input. Try again.");
 					
-				}else {
+				} else {
 					validChip = true;
 				}
 			} catch(NumberFormatException e) {
@@ -108,8 +112,7 @@ public class Blackjack {
 				System.out.println("Your chip total is " + bet);
 				System.out.println("Press 1 to Hit.\n"
 								 + "Press 2 to Stand.\n"
-								 + "Press 3 to Double Down.\n"
-								 + ((firstCard.compareTo(secondCard) == 0) ? "Press 4 to Split." : ""));
+								 + "Press 3 to Double Down.\n");
 				
 				input = in.nextInt();
 				in.nextLine();
@@ -122,6 +125,9 @@ public class Blackjack {
 						test.setChips(test.getChips() - bet);
 						System.out.println("You just lost " + bet + " chips; now your total is "
 								 + test.getChips() + " chips.");
+						if (test.getChips() < 1) {
+							return;
+						}
 						
 					} else if (getSum(hand) == 21) {
 						System.out.println("You win!");
@@ -134,20 +140,13 @@ public class Blackjack {
 				case 2:
 					resume = false;
 					stand();
+					if (test.getChips() < 1) {
+						return;
+					}
 					break;
 				case 3: 
 					doubleDown();
 					resume = false;
-					break;
-				case 4: 
-					if (firstCard.compareTo(secondCard) == 0) {
-						splitHand = new Deck(1);
-						splitHand.add(secondCard);
-						hand.remove(secondCard);
-						split();
-					} else {
-						System.out.println("Invalid input. Try again.");
-					}
 					break;
 				default:
 					System.out.println("Invalid input. Try again.");
@@ -262,12 +261,9 @@ public class Blackjack {
 		stand();
 	}
 	
-	private void split() {
-		
-	}
-	
 	private void oneValue(Card card, Deck deck) {
 		if (getSum(deck) + 11 <= 21) {
+			// checks to see if 11 is allowed
 			card.setPointValue(11);
 		} else if (getSum(deck) + 1 <= 21) {
 			card.setPointValue(1);

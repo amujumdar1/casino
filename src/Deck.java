@@ -13,7 +13,9 @@ public class Deck extends ArrayList<Card>{
 
 	public Deck(int size) {
 		super(size);
-		if (size == 52) createDeck();
+		if (size == 52) {
+			createDeck();
+		}
 	}
 	
 	/**
@@ -30,7 +32,9 @@ public class Deck extends ArrayList<Card>{
 	}
 	
 	public Card deal() {
-		if (isEmpty()) return null;
+		if (isEmpty()) {
+			return null;
+		}
 		return this.get(--stillLeft);
 		
 	}
